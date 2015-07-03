@@ -90,4 +90,12 @@ public class LoginSteps extends TestBaseNative {
     public void I_expect_error_message(String expectedMessage) throws Throwable {
         errorMessageShouldBePresent(expectedMessage);
     }
+
+    @Given("^I successfully login$")
+    public void I_successfully_login() throws Throwable {
+        I_access_the_login_page();
+        I_insert_invalid_credentials();
+        I_click_on_login_button();
+        I_check_if_user_was_logged_in();
+    }
 }

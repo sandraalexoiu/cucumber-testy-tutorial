@@ -22,3 +22,23 @@ Scenario: Login with no password
   Then I expect "Please enter your password!" error message
 
 
+Scenario Outline: Failed login
+  Given I access the login page
+  When I enter "<email>"/"<pass>" credentials
+  And I click on login button
+  Then I expect "<message>" error message
+  Examples:
+    | email | pass | message |
+    | |  | Please enter your email! |
+    | aa@fast.com |  | Please enter your password! |
+    |             | onlypass | Please enter you email!|
+    | aa@fast.com |  somepass| Please enter your password!|
+
+
+  Scenario: Logout success
+    Given I successfully login
+
+
+
+
+
