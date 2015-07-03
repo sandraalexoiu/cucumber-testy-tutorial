@@ -30,11 +30,8 @@ public class LoginSteps extends TestBaseNative {
 
     @Given("^I insert valid credentials$")
     public void I_insert_valid_credentials() throws Throwable {
-       WebElement email = driver.findElement(By.id("email"));
-        email.sendKeys("eu@fast.com");
 
-        WebElement password = driver.findElement(By.id("password"));
-        password.sendKeys("eu.pass");
+        I_enter_credentials ("eu@fast.com","eu.pass");
 
     }
 
@@ -53,36 +50,44 @@ public class LoginSteps extends TestBaseNative {
         } catch (Exception e) {}
         //Assert.assertEquals("eroare", true, driver.findElement(By.linkText("Logout")));
 
-      assertThat("Could not find the logout button",successLoggedIn, is(true));
+      assertThat("Could not find the logout button", successLoggedIn, is(true));
 
     }
 
     @Given("^I insert invalid credentials$")
     public void I_insert_invalid_credentials() throws Throwable {
-        WebElement email = driver.findElement(By.id("email"));
-        email.sendKeys("aa@fast.com");
 
-
-        WebElement password = driver.findElement(By.id("password"));
-        password.sendKeys("eu.pass");
+        I_enter_credentials ("aa@fast.com","aa.pass");
 
     }
 
     @Then("^I expect invalid credentials message$")
     public void I_expect_invalid_credentials_message() throws Throwable {
-       WebElement error= driver.findElement(By.className("error-msg"));
-        assertThat(error.getText(), is("Invalid user or password!"));
+        errorMessageShouldBePresent("Invalid user or password!");
 
 
     }
 
-   // @Given("^I open this url \"([^\"]*)\"$")
-   // public void I_open_this_url(String url) throws Throwable {
-    //    driver.get(url);
-    //}
+    private void errorMessageShouldBePresent(String expectedMessage) {
+        WebElement error= driver.findElement(By.className("error-msg"));
+        //final String expectedMessage = "Invalid user or password!";
+        assertThat(error.getText(), is(expectedMessage));
+    }
 
-   // @Then("^I send (\\d+) into search field$")
-   // public void I_send_into_search_field(int arg1) throws Throwable {
-   //    System.out.println("numarul meu este" +arg1);
-   // }
+    @When("^I enter \"([^\"]*)\"/\"([^\"]*)\" credentials$")
+    public void I_enter_credentials(String emailValue, String passwordValue) throws Throwable {
+
+        WebElement email = driver.findElement(By.id("email"));
+        email.sendKeys(emailValue);
+
+
+        WebElement password = driver.findElement(By.id("password"));
+        password.sendKeys(passwordValue);
+    }
+
+
+    @Then("^I expect \"([^\"]*)\" error message$")
+    public void I_expect_error_message(String expectedMessage) throws Throwable {
+        errorMessageShouldBePresent(expectedMessage);
+    }
 }
