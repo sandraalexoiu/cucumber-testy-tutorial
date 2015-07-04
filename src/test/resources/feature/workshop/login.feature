@@ -1,3 +1,4 @@
+@screen
 Feature: Login
 
 
@@ -28,11 +29,11 @@ Scenario Outline: Failed login
   And I click on login button
   Then I expect "<message>" error message
   Examples:
-    | email | pass | message |
-    | |  | Please enter your email! |
-    | aa@fast.com |  | Please enter your password! |
-    |             | onlypass | Please enter you email!|
-    | aa@fast.com |  somepass| Please enter your password!|
+    | email       | pass     | message                     |
+    |             |          | Please enter your email!    |
+    | aa@fast.com |          | Please enter your password! |
+    |             | onlypass | Please enter your email!    |
+    | aa@fast.com | somepass | Invalid user or password!   |
 
 
   Scenario: Logout success
