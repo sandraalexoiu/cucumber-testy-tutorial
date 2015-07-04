@@ -18,7 +18,7 @@ public abstract class TestBase {
 
     private static void startSuite() {
         try {
-            driver = WebDriverConfig.getWebDriver(Browser.CHROME);
+            driver = WebDriverConfig.getWebDriver(Browser.FIREFOX);
         } catch (Exception e) {
             LOGGER.error("Exception when start suite", e);
         }
