@@ -8,6 +8,9 @@ import org.openqa.selenium.support.How;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+
 public class LoginPage {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
 
@@ -20,6 +23,9 @@ public class LoginPage {
     @FindBy (how = How.ID, using="password")
     private  WebElement password;
 
+    @FindBy (how = How.CLASS_NAME, using="error-msg")
+    private WebElement error;
+
 
         public void clickOnLoginButton() {
             loginButton.click();
@@ -29,5 +35,9 @@ public class LoginPage {
 
         email.sendKeys(emailValue);
         password.sendKeys(passwordValue);
+    }
+
+    public void errorMessageShouldBePresent(String expectedMessage) {
+        assertThat(error.getText(), is(expectedMessage));
     }
 }

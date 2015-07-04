@@ -59,7 +59,6 @@ public class LoginSteps extends TestBaseNative {
             WebElement logout = driver.findElement(By.linkText("Logout"));
             successLoggedIn= logout.isDisplayed();
         } catch (Exception e) {}
-        //Assert.assertEquals("eroare", true, driver.findElement(By.linkText("Logout")));
 
       assertThat("Could not find the logout button", successLoggedIn, is(true));
 
@@ -68,21 +67,17 @@ public class LoginSteps extends TestBaseNative {
     @Given("^I insert invalid credentials$")
     public void I_insert_invalid_credentials() throws Throwable {
 
-        I_enter_credentials ("aa@fast.com","aa.pass");
+        I_enter_credentials("aa@fast.com", "aa.pass");
 
     }
 
     @Then("^I expect invalid credentials message$")
     public void I_expect_invalid_credentials_message() throws Throwable {
-        errorMessageShouldBePresent("Invalid user or password!");
-
+        loginPage.errorMessageShouldBePresent("Invalid user or password!");
 
     }
 
-    private void errorMessageShouldBePresent(String expectedMessage) {
-        WebElement error= driver.findElement(By.className("error-msg"));
-        assertThat(error.getText(), is(expectedMessage));
-    }
+
 
     @When("^I enter \"([^\"]*)\"/\"([^\"]*)\" credentials$")
     public void I_enter_credentials(String emailValue, String passwordValue) throws Throwable {
@@ -93,7 +88,7 @@ public class LoginSteps extends TestBaseNative {
 
     @Then("^I expect \"([^\"]*)\" error message$")
     public void I_expect_error_message(String expectedMessage) throws Throwable {
-        errorMessageShouldBePresent(expectedMessage);
+        loginPage.errorMessageShouldBePresent(expectedMessage);
     }
 
     @Given("^I successfully login$")
