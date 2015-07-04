@@ -9,7 +9,9 @@ import org.fasttrackit.util.TestBaseNative;
 import org.fasttrackit.workshop.pagefactory.login.LoginPage;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +21,16 @@ import static org.hamcrest.core.Is.is;
 public class LoginSteps extends TestBaseNative {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginSteps.class);
 
-    LoginPage loginPage;
+    LoginPage loginPage = new LoginPage();
+
+    public LoginSteps() {
+        initPage();
+    }
+
+
+    public void initPage() {
+        loginPage = PageFactory.initElements(driver, LoginPage.class);
+    }
 
 
 
@@ -31,15 +42,17 @@ public class LoginSteps extends TestBaseNative {
     @Given("^I insert valid credentials$")
     public void I_insert_valid_credentials() throws Throwable {
 
-        I_enter_credentials ("eu@fast.com","eu.pass");
+        I_enter_credentials("eu@fast.com", "eu.pass");
 
     }
 
     @When("^I click on login button$")
     public void I_click_on_login_button() throws Throwable {
-       WebElement clicklog= driver.findElement(By.id("loginButton"));
-        clicklog.click();
+        loginPage.clickOnLoginButton();
+
     }
+
+
 
     @Then("^I check if user was logged in$")
     public void I_check_if_user_was_logged_in() throws Throwable {
@@ -94,7 +107,7 @@ public class LoginSteps extends TestBaseNative {
     @Given("^I successfully login$")
     public void I_successfully_login() throws Throwable {
         I_access_the_login_page();
-        I_insert_invalid_credentials();
+        I_insert_valid_credentials();
         I_click_on_login_button();
         I_check_if_user_was_logged_in();
     }
