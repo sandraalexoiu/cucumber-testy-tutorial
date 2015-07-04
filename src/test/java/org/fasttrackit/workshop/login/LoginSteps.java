@@ -33,7 +33,6 @@ public class LoginSteps extends TestBaseNative {
     }
 
 
-
     @Given("^I access the login page$")
     public void I_access_the_login_page() throws Throwable {
         driver.get("https://dl.dropboxusercontent.com/u/16174618/FastTrackIT/app-demo/login.html");
@@ -51,7 +50,6 @@ public class LoginSteps extends TestBaseNative {
         loginPage.clickOnLoginButton();
 
     }
-
 
 
     @Then("^I check if user was logged in$")
@@ -83,19 +81,13 @@ public class LoginSteps extends TestBaseNative {
 
     private void errorMessageShouldBePresent(String expectedMessage) {
         WebElement error= driver.findElement(By.className("error-msg"));
-        //final String expectedMessage = "Invalid user or password!";
         assertThat(error.getText(), is(expectedMessage));
     }
 
     @When("^I enter \"([^\"]*)\"/\"([^\"]*)\" credentials$")
     public void I_enter_credentials(String emailValue, String passwordValue) throws Throwable {
 
-        WebElement email = driver.findElement(By.id("email"));
-        email.sendKeys(emailValue);
-
-
-        WebElement password = driver.findElement(By.id("password"));
-        password.sendKeys(passwordValue);
+        loginPage.enterCredentials(emailValue, passwordValue);
     }
 
 
